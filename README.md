@@ -1,6 +1,6 @@
-# DevSync
+# DevSync - Real-time Collaborative Document Editor
 
----
+DevSync is a modern, real-time collaborative document editing platform inspired by Google Docs. It enables multiple users to simultaneously edit documents, see live changes, and collaborate seamlessly in real-time.
 
 ## **Tech Stack**
 
