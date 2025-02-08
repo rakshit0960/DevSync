@@ -17,10 +17,11 @@ const stats = [
 export function HeroSection() {
   return (
     <section
-      className="relative min-h-screen flex flex-col justify-center pt-20 pb-32 overflow-hidden"
+      className="relative min-h-[calc(100vh-5rem)] flex flex-col justify-center pt-24 pb-32 overflow-hidden mt-20"
       style={{ zIndex: LAYER_ORDER.base }}
     >
       {/* Background Elements */}
+
       <div className="absolute inset-0" style={{ zIndex: LAYER_ORDER.background }}>
         <BackgroundBeams />
       </div>
