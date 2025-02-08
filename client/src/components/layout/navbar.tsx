@@ -39,7 +39,7 @@ export function Navbar() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [visible, setVisible] = useState(true);
   const { isAuthenticated, user } = useAuth();
-  
+
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -68,7 +68,7 @@ export function Navbar() {
 
         <Container>
           <nav className="flex items-center justify-between h-16 px-4">
-            <motion.a 
+            <motion.a
               href="#"
               className="relative flex items-center"
               whileHover={{ scale: 1.02 }}
@@ -160,14 +160,14 @@ export function Navbar() {
                   </div>
                 ) : (
                   <div className="flex items-center gap-3">
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       size="sm"
                     >
                       Sign in
                     </Button>
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       size="sm"
                     >
                       Sign up
@@ -187,111 +187,111 @@ export function Navbar() {
           </nav>
         </Container>
 
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              style={{ zIndex: LAYER_ORDER.modal }}
-              className="fixed inset-0 lg:hidden isolate"
-            >
-              <div className="fixed inset-0 bg-black/60 backdrop-blur-md" />
+          <AnimatePresence>
+            {mobileMenuOpen && (
               <motion.div
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                className="fixed inset-y-0 right-0 w-full max-w-sm bg-black/80 shadow-xl backdrop-blur-xl"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                style={{ zIndex: LAYER_ORDER.modal }}
+                className="fixed inset-0 lg:hidden isolate"
               >
-                <div className="flex flex-col h-full">
-                  <div className="flex items-center justify-between px-4 h-20 border-b border-white/10">
-                    <div className="flex items-center">
-                      <span className="text-[1.7rem] font-black tracking-tighter text-white" style={{
-                        fontFamily: "'Inter', sans-serif",
-                        letterSpacing: '-0.04em',
-                      }}>
-                        Dev<span className="text-purple-400/90">Sync</span>
-                      </span>
-                      <div className="ml-1.5 h-1.5 w-1.5 rounded-full bg-purple-400/90 animate-pulse" />
-                    </div>
-                    <motion.button
-                      whileTap={{ scale: 0.95 }}
-                      className="p-2 text-neutral-300 hover:bg-white/5 rounded-md"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <X className="w-5 h-5" />
-                    </motion.button>
-                  </div>
-                  <div className="flex-1 overflow-y-auto py-6 px-4">
-                    <div className="space-y-1">
-                      {navigation.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className="block px-3 py-2.5 text-base font-medium text-neutral-300 rounded-md hover:bg-white/5"
-                        >
-                          {item.name}
-                        </a>
-                      ))}
-                    </div>
-                    {/* Mobile Auth Buttons */}
-                    {!isAuthenticated && (
-                      <div className="mt-8 space-y-3">
-                        <Button 
-                          variant="aceternity"
-                          className="w-full"
-                        >
-                          <div className="relative flex items-center justify-center gap-2 z-10 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10">
-                            <span>Sign in</span>
-                            <svg
-                              fill="none"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M10.75 8.75L14.25 12L10.75 15.25"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="1.5"
-                              />
-                            </svg>
-                          </div>
-                        </Button>
-                        <Button 
-                          variant="aceternity"
-                          className="w-full"
-                        >
-                          <div className="relative flex items-center justify-center gap-2 z-10 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10">
-                            <span>Sign up</span>
-                            <svg
-                              fill="none"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M10.75 8.75L14.25 12L10.75 15.25"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="1.5"
-                              />
-                            </svg>
-                          </div>
-                        </Button>
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-md" />
+                <motion.div
+                  initial={{ x: "100%" }}
+                  animate={{ x: 0 }}
+                  exit={{ x: "100%" }}
+                  className="fixed inset-y-0 right-0 w-full max-w-sm bg-black/80 shadow-xl backdrop-blur-xl"
+                >
+                  <div className="flex flex-col h-full">
+                    <div className="flex items-center justify-between px-4 h-20 border-b border-white/10">
+                      <div className="flex items-center">
+                        <span className="text-[1.7rem] font-black tracking-tighter text-white" style={{
+                          fontFamily: "'Inter', sans-serif",
+                          letterSpacing: '-0.04em',
+                        }}>
+                          Dev<span className="text-purple-400/90">Sync</span>
+                        </span>
+                        <div className="ml-1.5 h-1.5 w-1.5 rounded-full bg-purple-400/90 animate-pulse" />
                       </div>
-                    )}
+                      <motion.button
+                        whileTap={{ scale: 0.95 }}
+                        className="p-2 text-neutral-300 hover:bg-white/5 rounded-md"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <X className="w-5 h-5" />
+                      </motion.button>
+                    </div>
+                    <div className="flex-1 overflow-y-auto py-6 px-4">
+                      <div className="space-y-1">
+                        {navigation.map((item) => (
+                          <a
+                            key={item.name}
+                            href={item.href}
+                            className="block px-3 py-2.5 text-base font-medium text-neutral-300 rounded-md hover:bg-white/5"
+                          >
+                            {item.name}
+                          </a>
+                        ))}
+                      </div>
+                      {/* Mobile Auth Buttons */}
+                      {!isAuthenticated && (
+                        <div className="mt-8 space-y-3">
+                          <Button
+                            variant="aceternity"
+                            className="w-full"
+                          >
+                            <div className="relative flex items-center justify-center gap-2 z-10 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10">
+                              <span>Sign in</span>
+                              <svg
+                                fill="none"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M10.75 8.75L14.25 12L10.75 15.25"
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="1.5"
+                                />
+                              </svg>
+                            </div>
+                          </Button>
+                          <Button
+                            variant="aceternity"
+                            className="w-full"
+                          >
+                            <div className="relative flex items-center justify-center gap-2 z-10 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10">
+                              <span>Sign up</span>
+                              <svg
+                                fill="none"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M10.75 8.75L14.25 12L10.75 15.25"
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="1.5"
+                                />
+                              </svg>
+                            </div>
+                          </Button>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            )}
+          </AnimatePresence>
       </motion.header>
     </AnimatePresence>
   );
-} 
+}
