@@ -4,7 +4,6 @@ import { FeaturesSection } from "@/components/home/features-section";
 import { Footer } from "@/components/layout/footer";
 
 export default function Home() {
-
   return (
     <div className="relative overflow-hidden">
       <Navbar />
