@@ -6,19 +6,8 @@ import { Container } from "@/components/ui/container";
 import { Menu, X, FileText, Settings, LogOut, User } from "lucide-react";
 import { LAYER_ORDER } from "@/lib/constants";
 import { Avatar } from "@/components/ui/avatar";
-
-// Temporary auth state - replace with your auth logic later
-const useAuth = () => {
-  const [isAuthenticated] = useState(false); // Change to true to test authenticated state
-  return {
-    isAuthenticated,
-    user: isAuthenticated ? {
-      name: "John Doe",
-      email: "john@devsync.com",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=DevSync"
-    } : null
-  };
-};
+import { signOut, useSession, signIn } from "next-auth/react";
+import Link from "next/link";
 
 const navigation = [
   { name: "Documents", href: "#documents" },
@@ -38,7 +27,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [visible, setVisible] = useState(true);
-  const { isAuthenticated, user } = useAuth();
+  const { data: session } = useSession();
 
   const { scrollY } = useScroll();
 
@@ -50,6 +39,37 @@ export function Navbar() {
       setVisible(true);
     }
   });
+
+  const authItems = session ? (
+    <>
+      <span className="text-gray-700">Welcome, {session.user?.name}</span>
+      <button
+        onClick={() => signOut()}
+        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+      >
+        Logout
+      </button>
+    </>
+  ) : (
+    <>
+      <Link
+        href="/login"
+        className="text-gray-700 hover:text-gray-900 transition-colors"
+      >
+        Sign In
+      </Link>
+      <Link
+        href="/signup"
+        className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors"
+      >
+        Sign Up
+      </Link>
+    </>
+  );
+
+  const handleSignIn = () => {
+    signIn('google', { callbackUrl: '/dashboard' });
+  };
 
   return (
     <AnimatePresence mode="wait">
@@ -98,7 +118,7 @@ export function Navbar() {
 
             <div className="flex items-center gap-6">
               <div className="hidden lg:flex lg:items-center lg:gap-5">
-                {isAuthenticated ? (
+                {session ? (
                   <div className="relative">
                     <motion.button
                       onClick={() => setUserMenuOpen(!userMenuOpen)}
@@ -107,9 +127,9 @@ export function Navbar() {
                       whileTap={{ scale: 0.95 }}
                     >
                       <Avatar
-                        src={user?.avatar}
-                        alt={user?.name}
-                        fallback={user?.name?.[0] || "U"}
+                        src={session.user?.image ?? undefined}
+                        alt={session.user?.name ?? undefined}
+                        fallback={session.user?.name?.[0] || "U"}
                         className="ring-2 ring-purple-500/30 hover:ring-purple-500/50 transition-all duration-300 shadow-lg"
                       />
                     </motion.button>
@@ -128,14 +148,14 @@ export function Navbar() {
                             <div className="p-5 border-b border-white/10">
                               <div className="flex items-center gap-4">
                                 <Avatar
-                                  src={user?.avatar}
-                                  alt={user?.name}
+                                  src={session.user?.image ?? undefined}
+                                  alt={session.user?.name ?? undefined}
                                   size="md"
                                   className="ring-2 ring-purple-500/20"
                                 />
                                 <div>
-                                  <p className="text-base font-semibold text-white">{user?.name}</p>
-                                  <p className="text-sm text-neutral-400 truncate mt-0.5">{user?.email}</p>
+                                  <p className="text-base font-semibold text-white">{session.user?.name}</p>
+                                  <p className="text-sm text-neutral-400 truncate mt-0.5">{session.user?.email}</p>
                                 </div>
                               </div>
                             </div>
@@ -159,19 +179,7 @@ export function Navbar() {
                   </div>
                 ) : (
                   <div className="flex items-center gap-4">
-                    <Button
-                      variant="ghost"
-                      size="lg"
-                      className="text-neutral-300 hover:text-white"
-                    >
-                      Sign in
-                    </Button>
-                    <Button
-                      size="lg"
-                      className="bg-purple-600 hover:bg-purple-500 text-white border-0 shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30"
-                    >
-                      Sign up
-                    </Button>
+                    {authItems}
                   </div>
                 )}
               </div>
@@ -237,19 +245,9 @@ export function Navbar() {
                         ))}
                       </div>
                       {/* Mobile Auth Buttons */}
-                      {!isAuthenticated && (
+                      {!session && (
                         <div className="mt-10 space-y-4">
-                          <Button
-                            variant="outline"
-                            className="w-full h-12 text-base"
-                          >
-                            Sign in
-                          </Button>
-                          <Button
-                            className="w-full h-12 text-base bg-purple-600 hover:bg-purple-500"
-                          >
-                            Sign up
-                          </Button>
+                          {authItems}
                         </div>
                       )}
                     </div>

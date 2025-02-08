@@ -14,4 +14,6 @@ export const LAYER_ORDER = {
   
   toast: 100,
   tooltip: 110,
-} as const; 
+} as const;
+
+export const API_BASE_URL = 'http://localhost:5000/api'; 
