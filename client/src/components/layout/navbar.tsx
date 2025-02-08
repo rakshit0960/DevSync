@@ -63,80 +63,79 @@ export function Navbar() {
         style={{ zIndex: LAYER_ORDER.navbar }}
         className="fixed inset-x-0 top-0 isolate"
       >
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/10 to-black/0 dark:from-black/50 dark:to-black/0 backdrop-blur-xl" />
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/20 to-black/0 dark:from-black/70 dark:to-black/0 backdrop-blur-2xl" />
+        <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
 
         <Container>
-          <nav className="flex items-center justify-between h-16 px-4">
+          <nav className="flex items-center justify-between h-20 px-6">
             <motion.a
               href="#"
-              className="relative flex items-center"
+              className="group flex items-center gap-3"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <div className="flex items-center">
-                <span className="text-[1.7rem] font-black tracking-tighter text-white" style={{
-                  fontFamily: "'Inter', sans-serif",
-                  letterSpacing: '-0.04em',
-                }}>
-                  Dev<span className="text-purple-400/90">Sync</span>
-                </span>
-                <div className="ml-1.5 h-1.5 w-1.5 rounded-full bg-purple-400/90 animate-pulse" />
+              <div className="h-9 w-9 rounded-xl bg-purple-500/20 flex items-center justify-center shadow-lg shadow-purple-500/20">
+                <div className="h-3.5 w-3.5 rounded-sm bg-purple-500 group-hover:bg-purple-400 transition-colors duration-300" />
               </div>
+              <span className="text-2xl font-bold tracking-tight text-white">
+                DevSync
+              </span>
             </motion.a>
 
-            <div className="hidden lg:flex lg:items-center lg:gap-x-8">
+            <div className="hidden lg:flex lg:items-center lg:gap-x-10">
               {navigation.map((item) => (
                 <motion.a
                   key={item.name}
                   href={item.href}
-                  className="relative px-3 py-2 text-sm font-medium text-neutral-300 hover:text-white transition-colors"
-                  whileHover={{ y: -1 }}
+                  className="group relative px-3 py-2 text-sm font-medium text-neutral-300 hover:text-white transition-colors duration-300"
+                  whileHover={{ y: -2 }}
                 >
                   {item.name}
-                  <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-purple-500/0 via-purple-500/40 to-purple-500/0 opacity-0 transition-opacity group-hover:opacity-100" />
+                  <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-purple-500/0 via-purple-500/70 to-purple-500/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 </motion.a>
               ))}
             </div>
 
-            <div className="flex items-center gap-4">
-              <div className="hidden lg:flex lg:items-center lg:gap-4">
+            <div className="flex items-center gap-6">
+              <div className="hidden lg:flex lg:items-center lg:gap-5">
                 {isAuthenticated ? (
                   <div className="relative">
                     <motion.button
                       onClick={() => setUserMenuOpen(!userMenuOpen)}
-                      className="flex items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                      className="flex items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500/30"
+                      whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       <Avatar
                         src={user?.avatar}
                         alt={user?.name}
                         fallback={user?.name?.[0] || "U"}
-                        className="ring-2 ring-purple-500/20 hover:ring-purple-500/40 transition-all"
+                        className="ring-2 ring-purple-500/30 hover:ring-purple-500/50 transition-all duration-300 shadow-lg"
                       />
                     </motion.button>
 
                     <AnimatePresence>
                       {userMenuOpen && (
                         <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 8 }}
-                          transition={{ duration: 0.15 }}
+                          initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
                           style={{ zIndex: LAYER_ORDER.dropdown }}
-                          className="absolute right-0 mt-2 w-64 origin-top-right"
+                          className="absolute right-0 mt-3 w-72 origin-top-right"
                         >
-                          <div className="rounded-lg bg-black/90 backdrop-blur-xl shadow-lg ring-1 ring-white/10">
-                            <div className="p-4 border-b border-white/10">
-                              <div className="flex items-center gap-3">
+                          <div className="rounded-xl bg-black/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/10">
+                            <div className="p-5 border-b border-white/10">
+                              <div className="flex items-center gap-4">
                                 <Avatar
                                   src={user?.avatar}
                                   alt={user?.name}
-                                  size="sm"
+                                  size="md"
+                                  className="ring-2 ring-purple-500/20"
                                 />
                                 <div>
-                                  <p className="text-sm font-medium text-white">{user?.name}</p>
-                                  <p className="text-sm text-neutral-400 truncate">{user?.email}</p>
+                                  <p className="text-base font-semibold text-white">{user?.name}</p>
+                                  <p className="text-sm text-neutral-400 truncate mt-0.5">{user?.email}</p>
                                 </div>
                               </div>
                             </div>
@@ -145,8 +144,8 @@ export function Navbar() {
                                 <motion.a
                                   key={item.name}
                                   href={item.href}
-                                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-300 hover:bg-white/5 transition-colors"
-                                  whileHover={{ x: 2 }}
+                                  className="flex items-center gap-3 px-5 py-3 text-sm text-neutral-300 hover:bg-white/5 transition-colors duration-200"
+                                  whileHover={{ x: 4 }}
                                 >
                                   <item.icon className="w-4 h-4 text-neutral-400" />
                                   {item.name}
@@ -159,16 +158,17 @@ export function Navbar() {
                     </AnimatePresence>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-4">
                     <Button
                       variant="ghost"
-                      size="sm"
+                      size="lg"
+                      className="text-neutral-300 hover:text-white"
                     >
                       Sign in
                     </Button>
                     <Button
-                      variant="ghost"
-                      size="sm"
+                      size="lg"
+                      className="bg-purple-600 hover:bg-purple-500 text-white border-0 shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30"
                     >
                       Sign up
                     </Button>
@@ -178,10 +178,10 @@ export function Navbar() {
 
               <motion.button
                 whileTap={{ scale: 0.95 }}
-                className="lg:hidden p-2 text-neutral-300 hover:bg-white/5 rounded-md"
+                className="lg:hidden p-2.5 text-neutral-300 hover:bg-white/5 rounded-lg"
                 onClick={() => setMobileMenuOpen(true)}
               >
-                <Menu className="w-5 h-5" />
+                <Menu className="w-6 h-6" />
               </motion.button>
             </div>
           </nav>
@@ -196,92 +196,59 @@ export function Navbar() {
                 style={{ zIndex: LAYER_ORDER.modal }}
                 className="fixed inset-0 lg:hidden isolate"
               >
-                <div className="fixed inset-0 bg-black/60 backdrop-blur-md" />
+                <div className="fixed inset-0 bg-black/70 backdrop-blur-xl" />
                 <motion.div
                   initial={{ x: "100%" }}
                   animate={{ x: 0 }}
                   exit={{ x: "100%" }}
-                  className="fixed inset-y-0 right-0 w-full max-w-sm bg-black/80 shadow-xl backdrop-blur-xl"
+                  transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                  className="fixed inset-y-0 right-0 w-full max-w-sm bg-black/90 shadow-2xl backdrop-blur-2xl"
                 >
                   <div className="flex flex-col h-full">
-                    <div className="flex items-center justify-between px-4 h-20 border-b border-white/10">
+                    <div className="flex items-center justify-between px-6 h-24 border-b border-white/10">
                       <div className="flex items-center">
-                        <span className="text-[1.7rem] font-black tracking-tighter text-white" style={{
+                        <span className="text-2xl font-black tracking-tighter text-white" style={{
                           fontFamily: "'Inter', sans-serif",
                           letterSpacing: '-0.04em',
                         }}>
-                          Dev<span className="text-purple-400/90">Sync</span>
+                          Dev<span className="text-purple-400">Sync</span>
                         </span>
-                        <div className="ml-1.5 h-1.5 w-1.5 rounded-full bg-purple-400/90 animate-pulse" />
+                        <div className="ml-2 h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
                       </div>
                       <motion.button
                         whileTap={{ scale: 0.95 }}
-                        className="p-2 text-neutral-300 hover:bg-white/5 rounded-md"
+                        className="p-2.5 text-neutral-300 hover:bg-white/5 rounded-lg"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <X className="w-5 h-5" />
+                        <X className="w-6 h-6" />
                       </motion.button>
                     </div>
-                    <div className="flex-1 overflow-y-auto py-6 px-4">
-                      <div className="space-y-1">
+                    <div className="flex-1 overflow-y-auto py-8 px-6">
+                      <div className="space-y-2">
                         {navigation.map((item) => (
-                          <a
+                          <motion.a
                             key={item.name}
                             href={item.href}
-                            className="block px-3 py-2.5 text-base font-medium text-neutral-300 rounded-md hover:bg-white/5"
+                            className="block px-4 py-3 text-lg font-medium text-neutral-300 rounded-lg hover:bg-white/5 transition-colors duration-200"
+                            whileHover={{ x: 4 }}
                           >
                             {item.name}
-                          </a>
+                          </motion.a>
                         ))}
                       </div>
                       {/* Mobile Auth Buttons */}
                       {!isAuthenticated && (
-                        <div className="mt-8 space-y-3">
+                        <div className="mt-10 space-y-4">
                           <Button
-                            variant="aceternity"
-                            className="w-full"
+                            variant="outline"
+                            className="w-full h-12 text-base"
                           >
-                            <div className="relative flex items-center justify-center gap-2 z-10 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10">
-                              <span>Sign in</span>
-                              <svg
-                                fill="none"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                width="16"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M10.75 8.75L14.25 12L10.75 15.25"
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="1.5"
-                                />
-                              </svg>
-                            </div>
+                            Sign in
                           </Button>
                           <Button
-                            variant="aceternity"
-                            className="w-full"
+                            className="w-full h-12 text-base bg-purple-600 hover:bg-purple-500"
                           >
-                            <div className="relative flex items-center justify-center gap-2 z-10 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10">
-                              <span>Sign up</span>
-                              <svg
-                                fill="none"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                width="16"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M10.75 8.75L14.25 12L10.75 15.25"
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="1.5"
-                                />
-                              </svg>
-                            </div>
+                            Sign up
                           </Button>
                         </div>
                       )}
