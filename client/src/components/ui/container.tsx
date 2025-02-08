@@ -1,13 +1,18 @@
 import { cn } from '@/lib/utils'
 
-interface ContainerProps {
+interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
-  className?: string
 }
 
-export function Container({ children, className }: ContainerProps) {
+export function Container({ children, className, ...props }: ContainerProps) {
   return (
-    <div className={cn('relative overflow-hidden', className)}>
+    <div
+      className={cn(
+        "mx-auto w-full max-w-screen-xl px-2.5 md:px-20",
+        className
+      )}
+      {...props}
+    >
       {children}
     </div>
   )
