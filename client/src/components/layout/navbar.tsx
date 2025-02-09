@@ -9,18 +9,20 @@ import Link from "next/link";
 import { useState } from "react";
 
 const navigation = [
-  { name: "Documents", href: "#documents", icon: FileText },
-  { name: "Features", href: "#features", icon: Sparkles },
-  { name: "Templates", href: "#templates", icon: LayoutTemplate },
-  { name: "Pricing", href: "#pricing", icon: CreditCard },
+  { name: "Documents", href: "/documents", icon: FileText },
+  { name: "Features", href: "/features", icon: Sparkles },
+  { name: "Templates", href: "/templates", icon: LayoutTemplate },
+  { name: "Pricing", href: "/pricing", icon: CreditCard },
 ];
 
+
 const userNavigation = [
-  { name: "Dashboard", href: "#", icon: FileText },
-  { name: "Settings", href: "#", icon: Settings },
-  { name: "Profile", href: "#", icon: User },
-  { name: "Sign out", href: "#", icon: LogOut, onClick: () => signOut() },
+  { name: "Dashboard", href: "/dashboard", icon: FileText },
+  { name: "Settings", href: "/settings", icon: Settings },
+  { name: "Profile", href: "/profile", icon: User },
+  { name: "Sign out", href: "/auth/signout", icon: LogOut, onClick: () => signOut() },
 ];
+
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -54,15 +56,16 @@ export function Navbar() {
   ) : (
     <>
       <Link
-        href="/login"
+        href="/auth/signin"
         className="text-neutral-300 hover:text-white transition-colors duration-300"
       >
         Sign In
       </Link>
       <Link
-        href="/signup"
+        href="/auth/signup"
         className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors"
       >
+
         Sign Up
       </Link>
     </>
@@ -86,10 +89,11 @@ export function Navbar() {
         <Container>
           <nav className="flex items-center justify-between h-20 px-6">
             <motion.a
-              href="#"
+              href="/"
               className="group flex items-center gap-3"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+
             >
               <div className="h-9 w-9 rounded-xl bg-purple-500/20 flex items-center justify-center shadow-lg shadow-purple-500/20">
                 <div className="h-3.5 w-3.5 rounded-sm bg-purple-500 group-hover:bg-purple-400 transition-colors duration-300" />

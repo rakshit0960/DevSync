@@ -34,14 +34,15 @@ export default function AuthError() {
           </div>
           <div className="mt-6 text-center">
             <Link
-              href="/login"
+              href="/auth/login"
               className="text-indigo-600 hover:text-indigo-500"
             >
               Return to login
+
             </Link>
           </div>
         </div>
       </div>
     </div>
   );
-} 
+}
