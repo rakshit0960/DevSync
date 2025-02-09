@@ -1,13 +1,13 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
 import { LAYER_ORDER } from "@/lib/constants";
+import { motion } from "framer-motion";
+import { useRef } from "react";
 
 export function BackgroundBeams() {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <div 
+    <div
       ref={ref}
       className="absolute inset-0 overflow-hidden"
       style={{ zIndex: LAYER_ORDER.beams }}
@@ -30,4 +30,4 @@ export function BackgroundBeams() {
       />
     </div>
   );
-} 
+}

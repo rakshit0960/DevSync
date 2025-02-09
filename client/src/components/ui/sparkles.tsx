@@ -4,7 +4,15 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const random = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min;
 
-const generateSparkle = () => ({
+interface Sparkle {
+  id: string;
+  createdAt: number;
+  color: string;
+  size: number;
+  style: React.CSSProperties;
+}
+
+const generateSparkle = (): Sparkle => ({
   id: String(random(10000, 99999)),
   createdAt: Date.now(),
   color: "purple",
@@ -17,7 +25,7 @@ const generateSparkle = () => ({
 });
 
 export function Sparkles({ children }: { children: React.ReactNode }) {
-  const [sparkles, setSparkles] = useState<any[]>([]);
+  const [sparkles, setSparkles] = useState<Sparkle[]>([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -62,4 +70,4 @@ export function Sparkles({ children }: { children: React.ReactNode }) {
       <span className="relative inline-block">{children}</span>
     </span>
   );
-} 
+}
