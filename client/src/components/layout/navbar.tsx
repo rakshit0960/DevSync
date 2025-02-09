@@ -1,44 +1,38 @@
 "use client";
-import { useState } from "react";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
-import { Menu, X, FileText, Settings, LogOut, User } from "lucide-react";
-import { LAYER_ORDER } from "@/lib/constants";
 import { Avatar } from "@/components/ui/avatar";
-
-// Temporary auth state - replace with your auth logic later
-const useAuth = () => {
-  const [isAuthenticated] = useState(false); // Change to true to test authenticated state
-  return {
-    isAuthenticated,
-    user: isAuthenticated ? {
-      name: "John Doe",
-      email: "john@devsync.com",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=DevSync"
-    } : null
-  };
-};
+import { Container } from "@/components/ui/container";
+import { LAYER_ORDER } from "@/lib/constants";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
+import { FileText, LogOut, Menu, Settings, User, X } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import { useState } from "react";
 
 const navigation = [
-  { name: "Documents", href: "#documents" },
-  { name: "Features", href: "#features" },
-  { name: "Templates", href: "#templates" },
-  { name: "Pricing", href: "#pricing" },
+  { name: "Documents", href: "/documents" },
+  { name: "Features", href: "/features" },
+  { name: "Templates", href: "/templates" },
+  { name: "Pricing", href: "/pricing" },
 ];
 
 const userNavigation = [
-  { name: "Dashboard", href: "#", icon: FileText },
-  { name: "Settings", href: "#", icon: Settings },
-  { name: "Profile", href: "#", icon: User },
-  { name: "Sign out", href: "#", icon: LogOut },
+  { name: "Dashboard", href: "/dashboard", icon: FileText },
+  { name: "Settings", href: "/settings", icon: Settings },
+  { name: "Profile", href: "/profile", icon: User },
+  { name: "Sign out", href: "/signout", icon: LogOut },
 ];
+
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [visible, setVisible] = useState(true);
-  const { isAuthenticated, user } = useAuth();
+  const { data: session } = useSession();
 
   const { scrollY } = useScroll();
 
@@ -50,6 +44,33 @@ export function Navbar() {
       setVisible(true);
     }
   });
+
+  const authItems = session ? (
+    <>
+      <span className="text-gray-700">Welcome, {session.user?.name}</span>
+      <button
+        onClick={() => signOut()}
+        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+      >
+        Logout
+      </button>
+    </>
+  ) : (
+    <>
+      <Link
+        href="/signin"
+        className="text-neutral-300 hover:text-white transition-colors duration-300"
+      >
+        Sign In
+      </Link>
+      <Link
+        href="/signup"
+        className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors"
+      >
+        Sign Up
+      </Link>
+    </>
+  );
 
   return (
     <AnimatePresence mode="wait">
@@ -68,37 +89,41 @@ export function Navbar() {
 
         <Container>
           <nav className="flex items-center justify-between h-20 px-6">
-            <motion.a
-              href="#"
+            <Link href="/">
+            <motion.div
               className="group flex items-center gap-3"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <div className="h-9 w-9 rounded-xl bg-purple-500/20 flex items-center justify-center shadow-lg shadow-purple-500/20">
-                <div className="h-3.5 w-3.5 rounded-sm bg-purple-500 group-hover:bg-purple-400 transition-colors duration-300" />
-              </div>
-              <span className="text-2xl font-bold tracking-tight text-white">
-                DevSync
-              </span>
-            </motion.a>
+                <div className="h-9 w-9 rounded-xl bg-purple-500/20 flex items-center justify-center shadow-lg shadow-purple-500/20">
+                  <div className="h-3.5 w-3.5 rounded-sm bg-purple-500 group-hover:bg-purple-400 transition-colors duration-300" />
+                </div>
+                <span className="text-2xl font-bold tracking-tight text-white">
+                  DevSync
+                </span>
+            </motion.div>
+              </Link>
 
             <div className="hidden lg:flex lg:items-center lg:gap-x-10">
               {navigation.map((item) => (
-                <motion.a
+                <motion.div
                   key={item.name}
-                  href={item.href}
                   className="group relative px-3 py-2 text-sm font-medium text-neutral-300 hover:text-white transition-colors duration-300"
                   whileHover={{ y: -2 }}
+
                 >
-                  {item.name}
-                  <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-purple-500/0 via-purple-500/70 to-purple-500/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                </motion.a>
+                  <Link href={item.href}>
+                    {item.name}
+                    <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-purple-500/0 via-purple-500/70 to-purple-500/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  </Link>
+                </motion.div>
               ))}
             </div>
 
+
             <div className="flex items-center gap-6">
               <div className="hidden lg:flex lg:items-center lg:gap-5">
-                {isAuthenticated ? (
+                {session ? (
                   <div className="relative">
                     <motion.button
                       onClick={() => setUserMenuOpen(!userMenuOpen)}
@@ -107,9 +132,9 @@ export function Navbar() {
                       whileTap={{ scale: 0.95 }}
                     >
                       <Avatar
-                        src={user?.avatar}
-                        alt={user?.name}
-                        fallback={user?.name?.[0] || "U"}
+                        src={session.user?.image ?? undefined}
+                        alt={session.user?.name ?? undefined}
+                        fallback={session.user?.name?.[0] || "U"}
                         className="ring-2 ring-purple-500/30 hover:ring-purple-500/50 transition-all duration-300 shadow-lg"
                       />
                     </motion.button>
@@ -128,28 +153,35 @@ export function Navbar() {
                             <div className="p-5 border-b border-white/10">
                               <div className="flex items-center gap-4">
                                 <Avatar
-                                  src={user?.avatar}
-                                  alt={user?.name}
+                                  src={session.user?.image ?? undefined}
+                                  alt={session.user?.name ?? undefined}
                                   size="md"
                                   className="ring-2 ring-purple-500/20"
                                 />
                                 <div>
-                                  <p className="text-base font-semibold text-white">{user?.name}</p>
-                                  <p className="text-sm text-neutral-400 truncate mt-0.5">{user?.email}</p>
+                                  <p className="text-base font-semibold text-white">
+                                    {session.user?.name}
+                                  </p>
+                                  <p className="text-sm text-neutral-400 truncate mt-0.5">
+                                    {session.user?.email}
+                                  </p>
                                 </div>
                               </div>
                             </div>
                             <div className="py-2">
                               {userNavigation.map((item) => (
-                                <motion.a
+                                <motion.div
                                   key={item.name}
-                                  href={item.href}
                                   className="flex items-center gap-3 px-5 py-3 text-sm text-neutral-300 hover:bg-white/5 transition-colors duration-200"
                                   whileHover={{ x: 4 }}
+
                                 >
-                                  <item.icon className="w-4 h-4 text-neutral-400" />
-                                  {item.name}
-                                </motion.a>
+                                  <Link href={item.href}>
+                                    <item.icon className="w-4 h-4 text-neutral-400" />
+                                    {item.name}
+                                  </Link>
+                                </motion.div>
+
                               ))}
                             </div>
                           </div>
@@ -158,21 +190,7 @@ export function Navbar() {
                     </AnimatePresence>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-4">
-                    <Button
-                      variant="ghost"
-                      size="lg"
-                      className="text-neutral-300 hover:text-white"
-                    >
-                      Sign in
-                    </Button>
-                    <Button
-                      size="lg"
-                      className="bg-purple-600 hover:bg-purple-500 text-white border-0 shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30"
-                    >
-                      Sign up
-                    </Button>
-                  </div>
+                  <div className="flex items-center gap-4">{authItems}</div>
                 )}
               </div>
 
@@ -187,77 +205,69 @@ export function Navbar() {
           </nav>
         </Container>
 
-          <AnimatePresence>
-            {mobileMenuOpen && (
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{ zIndex: LAYER_ORDER.modal }}
+              className="fixed inset-0 lg:hidden isolate"
+            >
+              <div className="fixed inset-0 bg-black/70 backdrop-blur-xl" />
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                style={{ zIndex: LAYER_ORDER.modal }}
-                className="fixed inset-0 lg:hidden isolate"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="fixed inset-y-0 right-0 w-full max-w-sm bg-black/90 shadow-2xl backdrop-blur-2xl"
               >
-                <div className="fixed inset-0 bg-black/70 backdrop-blur-xl" />
-                <motion.div
-                  initial={{ x: "100%" }}
-                  animate={{ x: 0 }}
-                  exit={{ x: "100%" }}
-                  transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                  className="fixed inset-y-0 right-0 w-full max-w-sm bg-black/90 shadow-2xl backdrop-blur-2xl"
-                >
-                  <div className="flex flex-col h-full">
-                    <div className="flex items-center justify-between px-6 h-24 border-b border-white/10">
-                      <div className="flex items-center">
-                        <span className="text-2xl font-black tracking-tighter text-white" style={{
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center justify-between px-6 h-24 border-b border-white/10">
+                    <div className="flex items-center">
+                      <span
+                        className="text-2xl font-black tracking-tighter text-white"
+                        style={{
                           fontFamily: "'Inter', sans-serif",
-                          letterSpacing: '-0.04em',
-                        }}>
-                          Dev<span className="text-purple-400">Sync</span>
-                        </span>
-                        <div className="ml-2 h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
-                      </div>
-                      <motion.button
-                        whileTap={{ scale: 0.95 }}
-                        className="p-2.5 text-neutral-300 hover:bg-white/5 rounded-lg"
-                        onClick={() => setMobileMenuOpen(false)}
+                          letterSpacing: "-0.04em",
+                        }}
                       >
-                        <X className="w-6 h-6" />
-                      </motion.button>
+                        Dev<span className="text-purple-400">Sync</span>
+                      </span>
+                      <div className="ml-2 h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
                     </div>
-                    <div className="flex-1 overflow-y-auto py-8 px-6">
-                      <div className="space-y-2">
-                        {navigation.map((item) => (
-                          <motion.a
-                            key={item.name}
-                            href={item.href}
-                            className="block px-4 py-3 text-lg font-medium text-neutral-300 rounded-lg hover:bg-white/5 transition-colors duration-200"
-                            whileHover={{ x: 4 }}
-                          >
-                            {item.name}
-                          </motion.a>
-                        ))}
-                      </div>
-                      {/* Mobile Auth Buttons */}
-                      {!isAuthenticated && (
-                        <div className="mt-10 space-y-4">
-                          <Button
-                            variant="outline"
-                            className="w-full h-12 text-base"
-                          >
-                            Sign in
-                          </Button>
-                          <Button
-                            className="w-full h-12 text-base bg-purple-600 hover:bg-purple-500"
-                          >
-                            Sign up
-                          </Button>
-                        </div>
-                      )}
-                    </div>
+                    <motion.button
+                      whileTap={{ scale: 0.95 }}
+                      className="p-2.5 text-neutral-300 hover:bg-white/5 rounded-lg"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <X className="w-6 h-6" />
+                    </motion.button>
                   </div>
-                </motion.div>
+                  <div className="flex-1 overflow-y-auto py-8 px-6">
+                    <div className="space-y-2">
+                      {navigation.map((item) => (
+                        <motion.div
+                          key={item.name}
+                          className="block px-4 py-3 text-lg font-medium text-neutral-300 rounded-lg hover:bg-white/5 transition-colors duration-200"
+                          whileHover={{ x: 4 }}
+                        >
+                          <Link href={item.href}>
+                            {item.name}
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </div>
+                    {/* Mobile Auth Buttons */}
+                    {!session && (
+                      <div className="mt-10 space-y-4">{authItems}</div>
+                    )}
+                  </div>
+                </div>
               </motion.div>
-            )}
-          </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.header>
     </AnimatePresence>
   );
