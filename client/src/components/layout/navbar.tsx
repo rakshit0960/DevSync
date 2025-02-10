@@ -2,8 +2,23 @@
 import { Avatar } from "@/components/ui/avatar";
 import { Container } from "@/components/ui/container";
 import { LAYER_ORDER } from "@/lib/constants";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { FileText, LogOut, Menu, Settings, User, X, Sparkles, LayoutTemplate, CreditCard } from "lucide-react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
+import {
+  FileText,
+  LogOut,
+  Menu,
+  Settings,
+  User,
+  X,
+  Sparkles,
+  LayoutTemplate,
+  CreditCard,
+} from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
@@ -15,14 +30,17 @@ const navigation = [
   { name: "Pricing", href: "/pricing", icon: CreditCard },
 ];
 
-
 const userNavigation = [
   { name: "Dashboard", href: "/dashboard", icon: FileText },
   { name: "Settings", href: "/settings", icon: Settings },
   { name: "Profile", href: "/profile", icon: User },
-  { name: "Sign out", href: "/auth/signout", icon: LogOut, onClick: () => signOut() },
+  {
+    name: "Sign out",
+    href: "/auth/signout",
+    icon: LogOut,
+    onClick: () => signOut(),
+  },
 ];
-
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -41,35 +59,35 @@ export function Navbar() {
     }
   });
 
-  const authItems = status === "loading" ? (
-    <div className="h-15 w-32 bg-neutral-800 animate-pulse rounded" />
-  ) : session ? (
-    <>
-      <span className="text-gray-700">Welcome, {session.user?.name}</span>
-      <button
-        onClick={() => signOut()}
-        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
-      >
-        Logout
-      </button>
-    </>
-  ) : (
-    <>
-      <Link
-        href="/auth/signin"
-        className="text-neutral-300 hover:text-white transition-colors duration-300"
-      >
-        Sign In
-      </Link>
-      <Link
-        href="/auth/signup"
-        className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors"
-      >
-
-        Sign Up
-      </Link>
-    </>
-  );
+  const authItems =
+    status === "loading" ? (
+      <div className="h-15 w-32 bg-neutral-800 animate-pulse rounded" />
+    ) : session ? (
+      <>
+        <span className="text-gray-700">Welcome, {session.user?.name}</span>
+        <button
+          onClick={() => signOut()}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+        >
+          Logout
+        </button>
+      </>
+    ) : (
+      <>
+        <Link
+          href="/auth/signin"
+          className="text-neutral-300 hover:text-white transition-colors duration-300"
+        >
+          Sign In
+        </Link>
+        <Link
+          href="/auth/signup"
+          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors"
+        >
+          Sign Up
+        </Link>
+      </>
+    );
 
   return (
     <AnimatePresence mode="wait">
@@ -93,7 +111,6 @@ export function Navbar() {
               className="group flex items-center gap-3"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-
             >
               <div className="h-9 w-9 rounded-xl bg-purple-500/20 flex items-center justify-center shadow-lg shadow-purple-500/20">
                 <div className="h-3.5 w-3.5 rounded-sm bg-purple-500 group-hover:bg-purple-400 transition-colors duration-300" />
@@ -169,8 +186,12 @@ export function Navbar() {
                                     className="ring-2 ring-purple-500/20"
                                   />
                                   <div>
-                                    <p className="text-base font-semibold text-white">{session.user?.name}</p>
-                                    <p className="text-sm text-neutral-400 truncate mt-0.5">{session.user?.email}</p>
+                                    <p className="text-base font-semibold text-white">
+                                      {session.user?.name}
+                                    </p>
+                                    <p className="text-sm text-neutral-400 truncate mt-0.5">
+                                      {session.user?.email}
+                                    </p>
                                   </div>
                                 </div>
                               </div>
@@ -194,9 +215,7 @@ export function Navbar() {
                     </AnimatePresence>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-4">
-                    {authItems}
-                  </div>
+                  <div className="flex items-center gap-4">{authItems}</div>
                 )}
               </div>
 
@@ -231,10 +250,13 @@ export function Navbar() {
                 <div className="flex flex-col h-full">
                   <div className="flex items-center justify-between px-6 h-24 border-b border-white/10">
                     <div className="flex items-center">
-                      <span className="text-2xl font-black tracking-tighter text-white" style={{
-                        fontFamily: "'Inter', sans-serif",
-                        letterSpacing: '-0.04em',
-                      }}>
+                      <span
+                        className="text-2xl font-black tracking-tighter text-white"
+                        style={{
+                          fontFamily: "'Inter', sans-serif",
+                          letterSpacing: "-0.04em",
+                        }}
+                      >
                         Dev<span className="text-purple-400">Sync</span>
                       </span>
                       <div className="ml-2 h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
@@ -264,8 +286,12 @@ export function Navbar() {
                             className="ring-2 ring-purple-500/20"
                           />
                           <div>
-                            <p className="text-base font-semibold text-white">{session.user?.name}</p>
-                            <p className="text-sm text-neutral-400 truncate mt-0.5">{session.user?.email}</p>
+                            <p className="text-base font-semibold text-white">
+                              {session.user?.name}
+                            </p>
+                            <p className="text-sm text-neutral-400 truncate mt-0.5">
+                              {session.user?.email}
+                            </p>
                           </div>
                         </div>
                         <div className="space-y-2">
@@ -283,7 +309,7 @@ export function Navbar() {
                         </div>
                         <div className="absolute bottom-8 left-6 right-6">
                           {userNavigation
-                            .filter(item => item.name === "Sign out")
+                            .filter((item) => item.name === "Sign out")
                             .map((item) => (
                               <motion.button
                                 key={item.name}
@@ -312,9 +338,7 @@ export function Navbar() {
                             </motion.a>
                           ))}
                         </div>
-                        <div className="mt-10 space-y-4">
-                          {authItems}
-                        </div>
+                        <div className="mt-10 space-y-4">{authItems}</div>
                       </>
                     )}
                   </div>

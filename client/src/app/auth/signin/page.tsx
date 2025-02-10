@@ -1,4 +1,5 @@
 "use client";
+"use client";
 
 import { GithubLoginButton } from "@/components/auth/GithubLoginButton";
 import { GoogleLoginButton } from "@/components/auth/GoogleLoginButton";
@@ -15,12 +16,14 @@ export default function SignInPage() {
   const router = useRouter();
   const {
     register,
+
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
   } = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
   });
+
 
   const onSubmit = async (data: SignInFormData) => {
     try {
@@ -115,10 +118,10 @@ export default function SignInPage() {
         </div>
 
         <div className="text-center mt-6">
-          <span className="text-gray-400">Don&apos;t have an account? </span>
+          <span className="text-gray-400">Don&apos;t have an account?</span>
           <Link
             href="/auth/signup"
-            className="font-medium text-purple-400 hover:text-purple-300 transition-colors duration-200 hover:underline focus:outline-none focus:ring-2 focus:ring-purple-500 rounded"
+            className="font-medium text-purple-400 hover:text-purple-300 transition-colors duration-200"
           >
             Sign up
           </Link>

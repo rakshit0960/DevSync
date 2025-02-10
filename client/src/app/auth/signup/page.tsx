@@ -1,4 +1,5 @@
 "use client";
+"use client";
 
 import { registerUser } from "@/actions/register";
 import { GithubLoginButton } from "@/components/auth/GithubLoginButton";
@@ -117,7 +118,7 @@ export default function SignupPage() {
           <span className="text-gray-400">Already have an account? </span>
           <Link
             href="/auth/signin"
-            className="font-medium text-purple-400 hover:text-purple-300 transition-colors duration-200 hover:underline focus:outline-none focus:ring-2 focus:ring-purple-500 rounded"
+            className="font-medium text-purple-400 hover:text-purple-300 transition-colors duration-200"
           >
             Sign in
           </Link>

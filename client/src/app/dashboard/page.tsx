@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { signOut } from '@/auth'; // Updated import for v5
 import { ArrowRightOnRectangleIcon, ChartBarIcon, Cog6ToothIcon, DocumentTextIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -10,7 +10,6 @@ import { useEffect } from 'react';
 export default function Dashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
-
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -50,11 +49,10 @@ export default function Dashboard() {
             ].map((item) => (
               <button
                 key={item.name}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                  item.active 
-                    ? 'bg-purple-900/30 text-purple-400' 
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${item.active
+                    ? 'bg-purple-900/30 text-purple-400'
                     : 'text-gray-400 hover:bg-purple-900/20'
-                }`}
+                  }`}
               >
                 <item.icon className="h-5 w-5 text-purple-500" />
                 {item.name}
@@ -83,7 +81,7 @@ export default function Dashboard() {
               </div>
             </div>
             <button
-              onClick={() => signOut()}
+              onClick={() => signOut({ callbackUrl: '/auth/signin' })}
               className="w-full flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-900/20 rounded-lg transition-colors"
             >
               <ArrowRightOnRectangleIcon className="h-5 w-5" />
