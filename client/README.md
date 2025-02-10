@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevSync
+
+A modern authentication and dashboard application built with Next.js 14, featuring a sleek UI and comprehensive authentication system.
+
+## Features
+
+- **Modern Authentication**
+
+  - Email/Password login
+  - OAuth integration (GitHub, Google)
+  - Secure session management
+  - Protected routes
+
+- **Sleek Dashboard**
+
+  - Real-time analytics
+  - Document management
+  - System status monitoring
+  - User profile management
+
+- **Polished UI/UX**
+  - Responsive design
+  - Dark theme with gradient accents
+  - Smooth animations
+  - Custom 404 page
+  - Loading states
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Authentication**: NextAuth.js v5
+- **Database**: Prisma with PostgreSQL
+- **Styling**: Tailwind CSS
+- **Animation**: Framer Motion
+- **Form Handling**: React Hook Form + Zod
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone and Install**
+
+```bash
+git clone https://github.com/yourusername/devsync.git
+cd devsync/client
+npm install
+```
+
+2. **Environment Setup**
+   Create a `.env` file with:
+
+```env
+# Auth
+AUTH_SECRET="your-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+
+# OAuth
+AUTH_GITHUB_ID="your-github-oauth-id"
+AUTH_GITHUB_SECRET="your-github-oauth-secret"
+AUTH_GOOGLE_ID="your-google-oauth-id"
+AUTH_GOOGLE_SECRET="your-google-oauth-secret"
+
+# Database
+DATABASE_URL="your-postgresql-url"
+```
+
+3. **Development**
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── actions/      # Server actions
+├── app/         # App router pages
+├── components/  # UI components
+├── lib/        # Utilities
+└── schema/     # Validation schemas
+```
 
-## Learn More
+## Key Features
 
-To learn more about Next.js, take a look at the following resources:
+### Authentication
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Multiple auth providers
+- Session persistence
+- Protected routes
+- Form validation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Dashboard
 
-## Deploy on Vercel
+- Analytics overview
+- Document management
+- System status
+- User settings
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### UI/UX
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Responsive design
+- Dark theme
+- Loading states
+- Error handling
+- Custom 404
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License.
