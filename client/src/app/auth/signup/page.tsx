@@ -15,12 +15,10 @@ export default function SignUpPage() {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setMessage("");
     setLoading(true);
 
     try {
@@ -29,7 +27,9 @@ export default function SignUpPage() {
       if (result.success) {
         if (result.requiresEmailVerification) {
           // If email verification is required, redirect to sign-in with message
-          router.push("/auth/signin?message=Please check your email to verify your account");
+          router.push(
+            "/auth/signin?message=Please check your email to verify your account"
+          );
         } else {
           // If no email verification required, user is already signed in
           router.push("/dashboard");
@@ -50,7 +50,7 @@ export default function SignUpPage() {
         <h2 className="text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400">
           Create your account
         </h2>
-        
+
         {error && (
           <div className="bg-red-500/10 border border-red-500 text-red-200 px-4 py-3 rounded-lg">
             {error}
@@ -63,7 +63,9 @@ export default function SignUpPage() {
               type="text"
               placeholder="Full Name"
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
               className="w-full px-4 py-3 bg-gray-700/30 border border-purple-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400"
             />
           </div>
@@ -73,7 +75,9 @@ export default function SignUpPage() {
               required
               placeholder="Email address"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               className="w-full px-4 py-3 bg-gray-700/30 border border-purple-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400"
             />
           </div>
@@ -83,7 +87,9 @@ export default function SignUpPage() {
               required
               placeholder="Password"
               value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
               className="w-full px-4 py-3 bg-gray-700/30 border border-purple-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400"
             />
           </div>

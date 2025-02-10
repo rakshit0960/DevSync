@@ -31,7 +31,7 @@ export default function SignInPage() {
     try {
       // First sign in with Supabase
       await authService.signIn(data);
-      
+
       // Then create NextAuth session
       const result = await signIn("credentials", {
         email: data.email,
@@ -77,7 +77,9 @@ export default function SignInPage() {
               placeholder="Email address"
             />
             {errors.email && (
-              <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+              <p className="mt-1 text-sm text-red-400">
+                {errors.email.message}
+              </p>
             )}
           </div>
           <div>
@@ -105,7 +107,7 @@ export default function SignInPage() {
         <OAuthButtons />
 
         <div className="text-center mt-6">
-          <span className="text-gray-400">Don't have an account? </span>
+          <span className="text-gray-400">Don&apos;t have an account?</span>
           <Link
             href="/auth/signup"
             className="font-medium text-purple-400 hover:text-purple-300 transition-colors duration-200"
