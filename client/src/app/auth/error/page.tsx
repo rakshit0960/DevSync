@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 function ErrorContent() {
   const searchParams = useSearchParams();
-  const error = searchParams.get('error');
+  const error = searchParams.get("error");
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900 via-gray-900 to-black">
@@ -14,16 +14,17 @@ function ErrorContent() {
           Authentication Error
         </h2>
         <p className="text-gray-300 text-center mb-6">
-          {error === 'OAuthSignin' && 'Error signing in with OAuth provider.'}
-          {error === 'OAuthCallback' && 'Error during OAuth callback.'}
-          {error === 'OAuthCreateAccount' && 'Error creating OAuth account.'}
-          {error === 'EmailCreateAccount' && 'Error creating email account.'}
-          {error === 'Callback' && 'Error during callback.'}
-          {error === 'OAuthAccountNotLinked' && 'Email already used with different provider.'}
-          {error === 'EmailSignin' && 'Error sending email signin link.'}
-          {error === 'CredentialsSignin' && 'Invalid credentials.'}
-          {error === 'SessionRequired' && 'Please sign in to access this page.'}
-          {!error && 'An unknown error occurred.'}
+          {error === "OAuthSignin" && "Error signing in with OAuth provider."}
+          {error === "OAuthCallback" && "Error during OAuth callback."}
+          {error === "OAuthCreateAccount" && "Error creating OAuth account."}
+          {error === "EmailCreateAccount" && "Error creating email account."}
+          {error === "Callback" && "Error during callback."}
+          {error === "OAuthAccountNotLinked" &&
+            "Email already used with different provider."}
+          {error === "EmailSignin" && "Error sending email signin link."}
+          {error === "CredentialsSignin" && "Invalid credentials."}
+          {error === "SessionRequired" && "Please sign in to access this page."}
+          {!error && "An unknown error occurred."}
         </p>
         <a
           href="/signin"
@@ -38,11 +39,13 @@ function ErrorContent() {
 
 export default function ErrorPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-gray-300">Loading...</div>
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-gray-300">Loading...</div>
+        </div>
+      }
+    >
       <ErrorContent />
     </Suspense>
   );

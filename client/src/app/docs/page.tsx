@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState } from "react";
 
@@ -11,9 +11,9 @@ export default function Docs() {
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-4">Collaborative Document</h1>
           <p className="text-lg text-foreground/70">
-            This is a placeholder for a real-time collaborative editor. For now, it&apos;s
-            just a plain text area. You can integrate a rich text editor and
-            real-time syncing logic later.
+            This is a placeholder for a real-time collaborative editor. For now,
+            it&apos;s just a plain text area. You can integrate a rich text
+            editor and real-time syncing logic later.
           </p>
         </div>
 

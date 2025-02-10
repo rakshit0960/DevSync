@@ -5,7 +5,7 @@ import { LAYER_ORDER } from "@/lib/constants";
 import { Navbar } from "@/components/layout/navbar";
 import { cn } from "@/lib/utils";
 import { ScrollToTop } from "@/components/scroll-to-top";
-import { AuthProvider } from '@/context/AuthContext';
+import { NextAuthProvider } from "@/providers/NextAuthProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,15 +30,18 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased"
         )}
       >
-        <AuthProvider>
+        <NextAuthProvider>
           <ScrollToTop />
           <div className="relative min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-1 relative" style={{ zIndex: LAYER_ORDER.content }}>
+            <main
+              className="flex-1 relative"
+              style={{ zIndex: LAYER_ORDER.content }}
+            >
               {children}
             </main>
           </div>
-        </AuthProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
